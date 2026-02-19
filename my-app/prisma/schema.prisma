@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  phone     String?
+  businessName String?
+  segment   String?  // médico, advogado, comércio, imobiliária, outro
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  agents    Agent[]
+  
+  @@map("users")
+}
+
+model Agent {
+  id          String   @id @default(uuid())
+  name        String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Configurações do agente
+  objective   String   // agendar, responder, qualificar, todos
+  tone        String   // formal, amigável, descontraído, profissional
+  serviceInfo String   @db.Text
+  faq         String?  @db.Text
+  workHours   String
+  
+  // Integrações
+  calendarProvider String? // google, outlook, none
+  whatsappNumber   String?
+  
+  // Status
+  status      String   @default("pending") // pending, active, paused
+  
+  // Métricas
+  totalConversations Int @default(0)
+  totalAppointments  Int @default(0)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  conversations Conversation[]
+  appointments  Appointment[]
+  
+  @@map("agents")
+}
+
+model Conversation {
+  id        String   @id @default(uuid())
+  agentId   String
+  agent     Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  
+  // Dados do cliente
+  customerName  String?
+  customerPhone String
+  
+  // Status
+  status    String   @default("active") // active, closed, waiting_human
+  
+  // Conteúdo (JSONB para flexibilidade)
+  messages  Json     // Array de {role, content, timestamp}
+  
+  // Contexto atual
+  context   Json?    // Intenção detectada, dados extraídos, etc
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  appointments Appointment[]
+  
+  @@map("conversations")
+}
+
+model Appointment {
+  id              String   @id @default(uuid())
+  agentId         String
+  agent           Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  conversationId  String?
+  conversation    Conversation? @relation(fields: [conversationId], references: [id])
+  
+  // Dados do agendamento
+  customerName    String
+  customerPhone   String
+  date            DateTime
+  time            String
+  service         String?
+  notes           String?
+  
+  // Status
+  status          String   @default("scheduled") // scheduled, confirmed, cancelled, completed
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@map("appointments")
+}
+
+model WhatsAppSession {
+  id        String   @id @default(uuid())
+  agentId   String   @unique
+  phoneNumber String
+  sessionData Json?  // Dados da sessão do WhatsApp
+  status    String   @default("connecting") // connecting, connected, disconnected
+  qrCode    String?  // QR code para conexão
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("whatsapp_sessions")
+}
