@@ -2,6 +2,9 @@
 
 Backend API para a plataforma AgenteFlow - Agentes de IA conversacionais para profissionais autônomos.
 
+> **Status:** ✅ Backend completo (2026-02-26)  
+> **Último commit:** Initial commit (2026-02-19)
+
 ## 📋 Stack Tecnológico
 
 - **Framework**: Next.js 16 + App Router
@@ -317,7 +320,13 @@ curl -X POST https://graph.facebook.com/v18.0/SEU_PHONE_NUMBER_ID/messages \
 - [ ] **Integração Google Calendar**
 - [ ] **Dashboard de métricas**
 - [ ] **Sistema de pagamentos (Stripe)**
+- [ ] **Integração GPT Realtime API** (voz em tempo real)
 
 ## 📄 Licença
 
 MIT
+
+---
+
+*Última atualização: 2026-03-07*
+*QA Engineer: Carol*
