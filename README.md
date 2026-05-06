@@ -328,5 +328,5 @@ MIT
 
 ---
 
-*Última atualização: 2026-03-19*
-*QA Engineer: Carol*
+*Última atualização: 2026-05-06*
+*QA Engineer: Carol (Revisão docs)*
