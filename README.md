@@ -314,6 +314,8 @@ curl -X POST https://graph.facebook.com/v18.0/SEU_PHONE_NUMBER_ID/messages \
 
 - [x] **Backend API completo** - Next.js, PostgreSQL, JWT Auth
 - [x] **Estrutura WhatsApp** - Webhook, envio de mensagens
+- [x] **Plano de Negócio** - Documento criado
+- [x] **Plano de Desenvolvimento** - Documento criado
 - [ ] **Configurar conta Meta** - WhatsApp Business API
 - [ ] **Testar integração** - Envio/recebimento real
 - [ ] **Integração OpenAI GPT-4**
@@ -328,5 +330,5 @@ MIT
 
 ---
 
-*Última atualização: 2026-05-17*
-*QA Engineer: Carol (Revisão docs - 17/05/2026)*
+*Última atualização: 2026-05-21*
+*QA Engineer: Carol (Revisão docs - 21/05/2026)*
